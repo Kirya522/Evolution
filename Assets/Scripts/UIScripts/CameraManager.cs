@@ -4,9 +4,9 @@ using Slider = UnityEngine.UI.Slider;
 
 public class CameraManager : MonoBehaviour
 {
-    public Slider slider;
+    [SerializeField] private Camera camera;
 
-    public Transform Background;
+    public Slider slider;
 
     public static Vector2 mouseDelta = new Vector2(0, 0);
 
@@ -18,14 +18,13 @@ public class CameraManager : MonoBehaviour
 
     public void ChangeCameraSize()
     {
-        Camera.main.orthographicSize = 100 - slider.value;
-        Background.localScale = new Vector2(5, 4) * Camera.main.orthographicSize / 50;
+        camera.orthographicSize = 100 - slider.value;
     }
 
     void Start()
     {
         MousePosition = Input.mousePosition;
-        CameraPosition = Camera.main.transform.position;
+        CameraPosition = camera.transform.position;
     }
 
     void Update()
@@ -56,7 +55,7 @@ public class CameraManager : MonoBehaviour
                                                       Y = -(int)Math.Round(
                                                               (Input.mousePosition.y - Screen.height / 2.0)
                                                               / 100 / Cell.SizeY / 5.4
-                                                              * Camera.main.orthographicSize
+                                                              * camera.orthographicSize
                                                               - Map.Size.Y / 2
                                                               + CameraPosition.y / Cell.SizeY,
                                                               MidpointRounding.AwayFromZero),
@@ -65,7 +64,7 @@ public class CameraManager : MonoBehaviour
                                                                                                        / Cell
                                                                                                            .SizeX
                                                                                                        / 5.4
-                                                          * Camera.main.orthographicSize + Map.Size.X / 2
+                                                          * camera.orthographicSize + Map.Size.X / 2
                                                                                          + CameraPosition.x
                                                                                          / Cell.SizeX,
                                                           MidpointRounding.AwayFromZero)
@@ -107,12 +106,11 @@ public class CameraManager : MonoBehaviour
                 CameraPosition.x += mouseDelta.x;
             }
 
-            Camera.main.transform.position = new Vector3(
+            camera.transform.position = new Vector3(
                 CameraPosition.x,
                 CameraPosition.y,
-                Camera.main.transform.position.z);
+                camera.transform.position.z);
             MousePosition = Input.mousePosition;
-            Background.position = new Vector3(CameraPosition.x, CameraPosition.y, Background.position.z);
             mouseDelta = new Vector2(0, 0);
         }
         else

@@ -47,7 +47,7 @@ public class SavesManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Метод сохраняет файл с указанным именем
+    /// Метод сохарняет файл с указанным именем
     /// </summary>
     public static void SaveGame(string nameSaveGame)
     {
